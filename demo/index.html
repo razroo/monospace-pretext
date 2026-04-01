@@ -14,7 +14,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=IBM+Plex+Sans:wght@300;400;600&family=Newsreader:opsz,wght@6..72,400;6..72,700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Sans:wght@300;400;600&family=Merriweather:wght@400;700&display=swap"
       rel="stylesheet"
     />
     <script type="module" src="./main.ts"></script>
@@ -23,40 +23,44 @@
     <div class="page-shell">
       <header class="hero">
         <p class="eyebrow">pretext-powered fake monospace</p>
-        <h1 class="display" data-demo-target>
+        <h1 class="display">
           Every font on this page is being coerced into equal-width grapheme cells.
         </h1>
-        <p class="lede" data-demo-target>
+        <p class="lede">
           The font family stays proportional, but each rendered grapheme gets the same measured advance width.
           That makes serif, sans, and display faces feel like strange custom monospace cuts.
         </p>
         <div class="controls">
           <button id="toggle-effect" type="button">Disable effect</button>
+          <button id="toggle-mode" type="button">Switch to strict mode</button>
           <button id="refresh-effect" type="button">Re-run layout</button>
         </div>
+        <p class="mode-note" id="mode-note">
+          Optical mode uses softer cell widths, centers glyphs in each cell, and trims spaces so paragraphs stay readable.
+        </p>
       </header>
 
       <main class="grid">
         <section class="card article-card">
           <p class="section-label">Editorial serif</p>
-          <h2 class="article-title" data-demo-target>
+          <h2 class="article-title">
             Typography can be made rigid without changing the typeface itself.
           </h2>
-          <p class="article-copy" data-demo-target>
+          <p class="article-copy">
             This demo uses measured grapheme widths and then expands every grapheme to a shared cell width for
             that font. The result is not true font engineering. It is a browser-side illusion.
           </p>
-          <blockquote class="quote" data-demo-target>
+          <blockquote class="quote">
             “It looks wrong in a useful way.”
           </blockquote>
         </section>
 
         <section class="card lab-card">
           <p class="section-label">Live editor</p>
-          <label class="editor-label" for="demo-input">Change the text and watch the observer reapply the effect.</label>
-          <textarea id="demo-input">Monospace behavior without switching to a monospace family.</textarea>
+          <label class="editor-label" for="demo-input">Type a short phrase and watch the observer reapply the effect.</label>
+          <textarea id="demo-input">Rigid voice.</textarea>
           <p id="editable-preview" class="editable-preview" data-demo-target>
-            Monospace behavior without switching to a monospace family.
+            Rigid voice.
           </p>
         </section>
 
@@ -64,16 +68,16 @@
           <p class="section-label">Font specimen</p>
           <div class="specimen-grid">
             <div class="specimen">
-              <p class="specimen-name">Abril Fatface</p>
-              <p class="specimen-line specimen-display" data-demo-target>WAVEFORM 2049 / glass orbit</p>
+              <p class="specimen-name">Archivo Black</p>
+              <p class="specimen-line specimen-display">WAVEFORM 2049 / glass orbit</p>
             </div>
             <div class="specimen">
-              <p class="specimen-name">Newsreader</p>
-              <p class="specimen-line specimen-serif" data-demo-target>Measured cells for italics, punctuation, and prose.</p>
+              <p class="specimen-name">Merriweather</p>
+              <p class="specimen-line specimen-serif">Measured cells for italics, punctuation, and prose.</p>
             </div>
             <div class="specimen">
               <p class="specimen-name">IBM Plex Sans</p>
-              <p class="specimen-line specimen-sans" data-demo-target>UI copy can become mechanical without swapping families.</p>
+              <p class="specimen-line specimen-sans">UI copy can become mechanical without swapping families.</p>
             </div>
           </div>
         </section>

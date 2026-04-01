@@ -1,0 +1,6 @@
+fonttools>=4.60.0
+PyYAML>=6.0
+ufoLib2>=0.18.0
+ufo2ft>=3.5.0
+brotli>=1.1.0
+fs>=2.4,<3

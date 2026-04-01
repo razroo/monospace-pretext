@@ -1,4 +1,4 @@
-import { monospacePage, type MonospaceController } from '../src/index'
+import { monospaceElement, type MonospaceController, type MonospaceMode } from '../src/index'
 
 const style = document.createElement('style')
 style.textContent = `
@@ -65,9 +65,9 @@ style.textContent = `
   .display {
     margin: 14px 0 0;
     max-width: 14ch;
-    font-family: "Abril Fatface", serif;
-    font-size: clamp(52px, 9vw, 108px);
-    line-height: 0.92;
+    font-family: "Archivo Black", sans-serif;
+    font-size: clamp(42px, 8vw, 82px);
+    line-height: 0.96;
     font-weight: 400;
   }
 
@@ -84,6 +84,14 @@ style.textContent = `
     flex-wrap: wrap;
     gap: 12px;
     margin-top: 22px;
+  }
+
+  .mode-note {
+    margin: 14px 0 0;
+    max-width: 72ch;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--muted);
   }
 
   .controls button {
@@ -130,9 +138,9 @@ style.textContent = `
 
   .article-title {
     margin: 18px 0 0;
-    font-family: "Newsreader", serif;
-    font-size: clamp(34px, 5vw, 56px);
-    line-height: 1.02;
+    font-family: "Merriweather", serif;
+    font-size: clamp(28px, 4vw, 44px);
+    line-height: 1.12;
     font-weight: 700;
   }
 
@@ -149,9 +157,9 @@ style.textContent = `
     margin: 26px 0 0;
     padding-left: 18px;
     border-left: 3px solid rgba(200, 92, 53, 0.5);
-    font-family: "Newsreader", serif;
-    font-size: 28px;
-    line-height: 1.25;
+    font-family: "Merriweather", serif;
+    font-size: 26px;
+    line-height: 1.32;
   }
 
   textarea {
@@ -166,10 +174,26 @@ style.textContent = `
   }
 
   .editable-preview {
-    padding: 16px 18px;
+    padding: 22px 24px;
     border-radius: 18px;
     background: rgba(33, 70, 52, 0.06);
     color: var(--accent-2);
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 19px;
+    line-height: 1.35;
+    font-weight: 500;
+  }
+
+  .editable-preview [data-pretext-monospace-wrapper] {
+    display: inline-flex !important;
+    flex-wrap: wrap;
+    gap: 1px 0;
+  }
+
+  .editable-preview [data-pretext-monospace-cell] {
+    box-shadow: inset 0 0 0 1px rgba(33, 70, 52, 0.08);
+    background: rgba(255, 255, 255, 0.42);
+    border-radius: 4px;
   }
 
   .specimen-grid {
@@ -191,15 +215,15 @@ style.textContent = `
   }
 
   .specimen-display {
-    font-family: "Abril Fatface", serif;
-    font-size: clamp(28px, 4vw, 46px);
-    line-height: 1.04;
+    font-family: "Archivo Black", sans-serif;
+    font-size: clamp(24px, 3vw, 38px);
+    line-height: 1.06;
   }
 
   .specimen-serif {
-    font-family: "Newsreader", serif;
-    font-size: 28px;
-    line-height: 1.18;
+    font-family: "Merriweather", serif;
+    font-size: 20px;
+    line-height: 1.34;
     font-style: italic;
   }
 
@@ -227,7 +251,9 @@ document.head.appendChild(style)
 const textarea = document.getElementById('demo-input')
 const preview = document.getElementById('editable-preview')
 const toggleButton = document.getElementById('toggle-effect')
+const modeButton = document.getElementById('toggle-mode')
 const refreshButton = document.getElementById('refresh-effect')
+const modeNote = document.getElementById('mode-note')
 
 if (!(textarea instanceof HTMLTextAreaElement)) {
   throw new Error('#demo-input not found')
@@ -241,20 +267,50 @@ if (!(toggleButton instanceof HTMLButtonElement)) {
   throw new Error('#toggle-effect not found')
 }
 
+if (!(modeButton instanceof HTMLButtonElement)) {
+  throw new Error('#toggle-mode not found')
+}
+
 if (!(refreshButton instanceof HTMLButtonElement)) {
   throw new Error('#refresh-effect not found')
 }
 
-let controller: MonospaceController | null = null
+if (!(modeNote instanceof HTMLElement)) {
+  throw new Error('#mode-note not found')
+}
+
+let controllers: MonospaceController[] = []
 let enabled = true
+let currentMode: MonospaceMode = 'optical'
 
 async function applyEffect(): Promise<void> {
-  controller?.disconnect()
-  controller?.restore()
-  controller = await monospacePage({
-    observe: true,
-    ignoreSelector: '[data-pretext-monospace-ignore], textarea, script, style, noscript',
-  })
+  restoreControllers()
+  const targets = Array.from(document.querySelectorAll('[data-demo-target]'))
+  controllers = await Promise.all(
+    targets.map((target) =>
+      monospaceElement(target, {
+        observe: true,
+        mode: currentMode,
+      }),
+    ),
+  )
+}
+
+function restoreControllers(): void {
+  for (const controller of controllers) {
+    controller.disconnect()
+    controller.restore()
+  }
+  controllers = []
+}
+
+function syncModeUI(): void {
+  modeButton.textContent =
+    currentMode === 'optical' ? 'Switch to strict mode' : 'Switch to optical mode'
+  modeNote.textContent =
+    currentMode === 'optical'
+      ? 'Optical mode uses softer cell widths, centers glyphs in each cell, and trims spaces so paragraphs stay readable.'
+      : 'Strict mode forces one fixed advance width per grapheme cell. It is more literal and usually looks harsher in body copy.'
 }
 
 textarea.addEventListener('input', () => {
@@ -270,16 +326,25 @@ toggleButton.addEventListener('click', async () => {
     return
   }
 
-  controller?.disconnect()
-  controller?.restore()
+  restoreControllers()
   toggleButton.textContent = 'Enable effect'
+})
+
+modeButton.addEventListener('click', async () => {
+  currentMode = currentMode === 'optical' ? 'strict' : 'optical'
+  syncModeUI()
+
+  if (enabled) {
+    await applyEffect()
+  }
 })
 
 refreshButton.addEventListener('click', async () => {
   if (!enabled) {
     return
   }
-  await controller?.refresh()
+  await Promise.all(controllers.map((controller) => controller.refresh()))
 })
 
+syncModeUI()
 await applyEffect()

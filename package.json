@@ -5,6 +5,9 @@
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "bin": {
+    "monospace-pretext-font": "./bin/monospace-pretext-font.js"
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -15,6 +18,8 @@
   },
   "files": [
     "dist",
+    "bin",
+    "python",
     "LICENSE",
     "README.md"
   ],
@@ -22,8 +27,13 @@
     "build": "tsc -p tsconfig.build.json",
     "demo": "vite --open demo/index.html",
     "prepack": "npm run build",
-    "test": "vitest run",
-    "check": "npm run build && npm run test"
+    "test:js": "vitest run",
+    "test:python": "python3 -m unittest discover -s python_tests -p 'test_*.py'",
+    "test": "npm run test:js && npm run test:python",
+    "check": "npm run build && npm run test",
+    "font:generate": "node ./bin/monospace-pretext-font.js",
+    "font:init-workspace": "node ./bin/monospace-pretext-font.js init-workspace",
+    "font:build-workspace": "node ./bin/monospace-pretext-font.js build-workspace"
   },
   "keywords": [
     "browser",

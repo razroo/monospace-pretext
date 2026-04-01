@@ -3,3 +3,7 @@ node_modules
 coverage
 package
 *.tgz
+.playwright-mcp
+demo-*.png
+__pycache__
+*.pyc
