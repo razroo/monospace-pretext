@@ -146,6 +146,14 @@ npm run demo
 ```
 
 Open the Vite URL it prints, usually `http://127.0.0.1:5173/`.
+The checked-in demo loads a generated webfont at [Roboto-DemoMono.woff2](/Users/charlie/Razroo/monospace-pretext/demo/fonts/generated/Roboto-DemoMono.woff2) and compares it against its Roboto source.
+
+Regenerate that demo font:
+
+```sh
+pip install -r python/requirements.txt
+npm run demo:font
+```
 
 Build the static demo site:
 
@@ -154,7 +162,8 @@ npm run demo:build
 npm run demo:preview
 ```
 
-That writes the production demo to `site-dist/`.
+If you want the build to reflect a freshly regenerated font, run `npm run demo:font` first.
+The production demo is written to `site-dist/`.
 
 ### Direct Font Generator
 
@@ -296,9 +305,13 @@ type MonospaceOptions = {
 - [src/index.ts](/Users/charlie/Razroo/monospace-pretext/src/index.ts): browser effect implementation
 - [demo/index.html](/Users/charlie/Razroo/monospace-pretext/demo/index.html): demo shell
 - [demo/main.ts](/Users/charlie/Razroo/monospace-pretext/demo/main.ts): demo behavior and styling
+- [Roboto-Regular.ttf](/Users/charlie/Razroo/monospace-pretext/demo/fonts/source/Roboto-Regular.ttf): vendored Apache-licensed source font used for the generated demo font
+- [Roboto-DemoMono.woff2](/Users/charlie/Razroo/monospace-pretext/demo/fonts/generated/Roboto-DemoMono.woff2): generated demo webfont produced by this repo
+- [LICENSE-Roboto.txt](/Users/charlie/Razroo/monospace-pretext/demo/fonts/LICENSE-Roboto.txt): upstream Roboto license
 - [vite.config.ts](/Users/charlie/Razroo/monospace-pretext/vite.config.ts): Vite config for local demo development and GitHub Pages production builds
 - [deploy-pages.yml](/Users/charlie/Razroo/monospace-pretext/.github/workflows/deploy-pages.yml): GitHub Actions workflow that publishes the demo to GitHub Pages
 - [python/monospace_font_tools.py](/Users/charlie/Razroo/monospace-pretext/python/monospace_font_tools.py): direct font generator
+- [build_demo_font.py](/Users/charlie/Razroo/monospace-pretext/python/build_demo_font.py): script that regenerates the demo webfont from the vendored Roboto source
 - [python/workspace_tools.py](/Users/charlie/Razroo/monospace-pretext/python/workspace_tools.py): workspace init/build pipeline
 - [python/cli.py](/Users/charlie/Razroo/monospace-pretext/python/cli.py): CLI entrypoint
 - [python_tests/test_generator.py](/Users/charlie/Razroo/monospace-pretext/python_tests/test_generator.py): direct-generator tests
@@ -314,7 +327,7 @@ One-time setup:
 2. Go to Pages.
 3. Under Build and deployment, set Source to `GitHub Actions`.
 
-After that, pushes to `main` will build the demo with `npm run demo:build` and publish `site-dist/`.
+After that, pushes to `main` will regenerate the demo font with `npm run demo:font`, build the demo with `npm run demo:build`, and publish `site-dist/`.
 
 The Vite base path is derived from `GITHUB_REPOSITORY` in [vite.config.ts](/Users/charlie/Razroo/monospace-pretext/vite.config.ts), so project Pages deployments resolve assets under `/<repo-name>/`.
 
@@ -332,6 +345,7 @@ The Vite base path is derived from `GITHUB_REPOSITORY` in [vite.config.ts](/User
 ```sh
 npm install
 pip install -r python/requirements.txt
+npm run demo:font
 npm run demo:build
 npm run check
 ```

@@ -26,6 +26,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "demo": "vite --open /",
+    "demo:font": "python3 ./python/build_demo_font.py",
     "demo:build": "vite build",
     "demo:preview": "vite preview",
     "prepack": "npm run build",

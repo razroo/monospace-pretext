@@ -1,7 +1,14 @@
 import { monospaceElement, type MonospaceController, type MonospaceMode } from '../src/index'
+import generatedFontUrl from './fonts/generated/Roboto-DemoMono.woff2?url'
 
 const style = document.createElement('style')
 style.textContent = `
+  @font-face {
+    font-family: "DemoGeneratedMono";
+    src: url("${generatedFontUrl}") format("woff2");
+    font-display: swap;
+  }
+
   :root {
     --bg: #f4efe4;
     --ink: #151515;
@@ -136,6 +143,37 @@ style.textContent = `
     grid-column: span 12;
   }
 
+  .font-comparison {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 18px;
+  }
+
+  .font-pane {
+    padding: 18px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.58);
+    border: 1px solid rgba(21, 21, 21, 0.08);
+  }
+
+  .font-line {
+    margin: 12px 0 0;
+    font-size: clamp(24px, 3vw, 36px);
+    line-height: 1.12;
+  }
+
+  .font-meta {
+    margin: 16px 0 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+
+  .font-meta code {
+    font-size: 0.95em;
+  }
+
   .article-title {
     margin: 18px 0 0;
     font-family: "Merriweather", serif;
@@ -234,6 +272,21 @@ style.textContent = `
     font-weight: 300;
   }
 
+  .repo-font-source {
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+  }
+
+  .repo-font-generated,
+  .specimen-generated {
+    font-family: "DemoGeneratedMono", monospace;
+  }
+
+  .specimen-generated {
+    font-size: 20px;
+    line-height: 1.3;
+  }
+
   @media (max-width: 900px) {
     .article-card,
     .lab-card,
@@ -241,6 +294,7 @@ style.textContent = `
       grid-column: span 12;
     }
 
+    .font-comparison,
     .specimen-grid {
       grid-template-columns: 1fr;
     }

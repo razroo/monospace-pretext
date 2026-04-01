@@ -14,7 +14,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Sans:wght@300;400;600&family=Merriweather:wght@400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Sans:wght@300;400;600&family=Merriweather:wght@400;700&family=Roboto:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
     <script type="module" src="./main.ts"></script>
@@ -22,13 +22,13 @@
   <body>
     <div class="page-shell">
       <header class="hero">
-        <p class="eyebrow">pretext-powered fake monospace</p>
+        <p class="eyebrow">browser illusion + generated font</p>
         <h1 class="display">
-          Every font on this page is being coerced into equal-width grapheme cells.
+          Fake monospace in the browser, real monospace in the font file.
         </h1>
         <p class="lede">
-          The font family stays proportional, but each rendered grapheme gets the same measured advance width.
-          That makes serif, sans, and display faces feel like strange custom monospace cuts.
+          This page now shows both sides of the repo: the live editor uses the Pretext-driven DOM effect,
+          and the lower specimen loads an actual generated webfont produced by the Python pipeline.
         </p>
         <div class="controls">
           <button id="toggle-effect" type="button">Disable effect</button>
@@ -42,9 +42,9 @@
 
       <main class="grid">
         <section class="card article-card">
-          <p class="section-label">Editorial serif</p>
+          <p class="section-label">Browser effect</p>
           <h2 class="article-title">
-            Typography can be made rigid without changing the typeface itself.
+            The live editor is still the browser-side cell trick, not a real font swap.
           </h2>
           <p class="article-copy">
             This demo uses measured grapheme widths and then expands every grapheme to a shared cell width for
@@ -65,7 +65,20 @@
         </section>
 
         <section class="card specimen-card">
-          <p class="section-label">Font specimen</p>
+          <p class="section-label">Generated font specimen</p>
+          <div class="font-comparison">
+            <div class="font-pane">
+              <p class="specimen-name">Source: Roboto Regular</p>
+              <p class="font-line repo-font-source">Typography can be made rigid without deleting its voice.</p>
+            </div>
+            <div class="font-pane">
+              <p class="specimen-name">Generated: Roboto DemoMono</p>
+              <p class="font-line repo-font-generated">Typography can be made rigid without deleting its voice.</p>
+            </div>
+          </div>
+          <p class="font-meta">
+            The generated side is a real WOFF2 emitted by this repo. Rebuild it with <code>npm run demo:font</code>.
+          </p>
           <div class="specimen-grid">
             <div class="specimen">
               <p class="specimen-name">Archivo Black</p>
@@ -78,6 +91,10 @@
             <div class="specimen">
               <p class="specimen-name">IBM Plex Sans</p>
               <p class="specimen-line specimen-sans">UI copy can become mechanical without swapping families.</p>
+            </div>
+            <div class="specimen">
+              <p class="specimen-name">Repo-generated font</p>
+              <p class="specimen-line specimen-generated">WIDE LOOP / narrow rhythm / 2049</p>
             </div>
           </div>
         </section>
