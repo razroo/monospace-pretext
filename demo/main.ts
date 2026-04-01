@@ -346,5 +346,9 @@ refreshButton.addEventListener('click', async () => {
   await Promise.all(controllers.map((controller) => controller.refresh()))
 })
 
-syncModeUI()
-await applyEffect()
+async function boot(): Promise<void> {
+  syncModeUI()
+  await applyEffect()
+}
+
+void boot()

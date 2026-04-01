@@ -25,7 +25,9 @@
   ],
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "demo": "vite --open demo/index.html",
+    "demo": "vite --open /",
+    "demo:build": "vite build",
+    "demo:preview": "vite preview",
     "prepack": "npm run build",
     "test:js": "vitest run",
     "test:python": "python3 -m unittest discover -s python_tests -p 'test_*.py'",

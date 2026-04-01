@@ -145,7 +145,16 @@ npm install
 npm run demo
 ```
 
-Open the Vite URL it prints, usually `http://127.0.0.1:5173/demo/index.html`.
+Open the Vite URL it prints, usually `http://127.0.0.1:5173/`.
+
+Build the static demo site:
+
+```sh
+npm run demo:build
+npm run demo:preview
+```
+
+That writes the production demo to `site-dist/`.
 
 ### Direct Font Generator
 
@@ -287,11 +296,27 @@ type MonospaceOptions = {
 - [src/index.ts](/Users/charlie/Razroo/monospace-pretext/src/index.ts): browser effect implementation
 - [demo/index.html](/Users/charlie/Razroo/monospace-pretext/demo/index.html): demo shell
 - [demo/main.ts](/Users/charlie/Razroo/monospace-pretext/demo/main.ts): demo behavior and styling
+- [vite.config.ts](/Users/charlie/Razroo/monospace-pretext/vite.config.ts): Vite config for local demo development and GitHub Pages production builds
+- [deploy-pages.yml](/Users/charlie/Razroo/monospace-pretext/.github/workflows/deploy-pages.yml): GitHub Actions workflow that publishes the demo to GitHub Pages
 - [python/monospace_font_tools.py](/Users/charlie/Razroo/monospace-pretext/python/monospace_font_tools.py): direct font generator
 - [python/workspace_tools.py](/Users/charlie/Razroo/monospace-pretext/python/workspace_tools.py): workspace init/build pipeline
 - [python/cli.py](/Users/charlie/Razroo/monospace-pretext/python/cli.py): CLI entrypoint
 - [python_tests/test_generator.py](/Users/charlie/Razroo/monospace-pretext/python_tests/test_generator.py): direct-generator tests
 - [python_tests/test_workspace.py](/Users/charlie/Razroo/monospace-pretext/python_tests/test_workspace.py): workspace tests
+
+## GitHub Pages
+
+The repo now includes a GitHub Actions workflow that deploys the demo site from `main` to GitHub Pages.
+
+One-time setup:
+
+1. Open GitHub repository settings.
+2. Go to Pages.
+3. Under Build and deployment, set Source to `GitHub Actions`.
+
+After that, pushes to `main` will build the demo with `npm run demo:build` and publish `site-dist/`.
+
+The Vite base path is derived from `GITHUB_REPOSITORY` in [vite.config.ts](/Users/charlie/Razroo/monospace-pretext/vite.config.ts), so project Pages deployments resolve assets under `/<repo-name>/`.
 
 ## Current Limits
 
@@ -307,5 +332,6 @@ type MonospaceOptions = {
 ```sh
 npm install
 pip install -r python/requirements.txt
+npm run demo:build
 npm run check
 ```
