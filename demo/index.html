@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>monospace-pretext demo</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23151515'/%3E%3Cpath d='M7 9h18v3h-7v11h-4V12H7z' fill='%23f4efe4'/%3E%3C/svg%3E"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=IBM+Plex+Sans:wght@300;400;600&family=Newsreader:opsz,wght@6..72,400;6..72,700&display=swap"
+      rel="stylesheet"
+    />
+    <script type="module" src="./main.ts"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <p class="eyebrow">pretext-powered fake monospace</p>
+        <h1 class="display" data-demo-target>
+          Every font on this page is being coerced into equal-width grapheme cells.
+        </h1>
+        <p class="lede" data-demo-target>
+          The font family stays proportional, but each rendered grapheme gets the same measured advance width.
+          That makes serif, sans, and display faces feel like strange custom monospace cuts.
+        </p>
+        <div class="controls">
+          <button id="toggle-effect" type="button">Disable effect</button>
+          <button id="refresh-effect" type="button">Re-run layout</button>
+        </div>
+      </header>
+
+      <main class="grid">
+        <section class="card article-card">
+          <p class="section-label">Editorial serif</p>
+          <h2 class="article-title" data-demo-target>
+            Typography can be made rigid without changing the typeface itself.
+          </h2>
+          <p class="article-copy" data-demo-target>
+            This demo uses measured grapheme widths and then expands every grapheme to a shared cell width for
+            that font. The result is not true font engineering. It is a browser-side illusion.
+          </p>
+          <blockquote class="quote" data-demo-target>
+            “It looks wrong in a useful way.”
+          </blockquote>
+        </section>
+
+        <section class="card lab-card">
+          <p class="section-label">Live editor</p>
+          <label class="editor-label" for="demo-input">Change the text and watch the observer reapply the effect.</label>
+          <textarea id="demo-input">Monospace behavior without switching to a monospace family.</textarea>
+          <p id="editable-preview" class="editable-preview" data-demo-target>
+            Monospace behavior without switching to a monospace family.
+          </p>
+        </section>
+
+        <section class="card specimen-card">
+          <p class="section-label">Font specimen</p>
+          <div class="specimen-grid">
+            <div class="specimen">
+              <p class="specimen-name">Abril Fatface</p>
+              <p class="specimen-line specimen-display" data-demo-target>WAVEFORM 2049 / glass orbit</p>
+            </div>
+            <div class="specimen">
+              <p class="specimen-name">Newsreader</p>
+              <p class="specimen-line specimen-serif" data-demo-target>Measured cells for italics, punctuation, and prose.</p>
+            </div>
+            <div class="specimen">
+              <p class="specimen-name">IBM Plex Sans</p>
+              <p class="specimen-line specimen-sans" data-demo-target>UI copy can become mechanical without swapping families.</p>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

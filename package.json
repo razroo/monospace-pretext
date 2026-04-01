@@ -1,0 +1,46 @@
+{
+  "name": "monospace-pretext",
+  "version": "0.1.0",
+  "description": "Turn proportional page text into fixed-width grapheme cells with @chenglou/pretext.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "demo": "vite --open demo/index.html",
+    "prepack": "npm run build",
+    "test": "vitest run",
+    "check": "npm run build && npm run test"
+  },
+  "keywords": [
+    "browser",
+    "dom",
+    "font",
+    "monospace",
+    "pretext",
+    "typography"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@chenglou/pretext": "^0.0.4"
+  },
+  "devDependencies": {
+    "jsdom": "^26.0.0",
+    "typescript": "^5.7.3",
+    "vite": "^6.3.5",
+    "vitest": "^3.0.8"
+  }
+}
